@@ -1,5 +1,5 @@
-from app.database.connection.py import database
-from app.models.property import Property
+from database.connection import database
+from models.property import Property
 from typing import List
 
 collection = database.get_collection("properties")

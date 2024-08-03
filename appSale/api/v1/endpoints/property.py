@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from app.crud import property as crud
-from app.models.property import Property
-from app.schemas.property import PropertyCreate, Property as PropertyResponse
+from crud import property as crud
+from models.property import Property
+from schemas.property import PropertyCreate, Property as PropertyResponse
 
 router = APIRouter()
 
