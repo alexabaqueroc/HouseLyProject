@@ -3,3 +3,4 @@ pydantic
 motor
 pymongo
 uvicorn
+pydantic_settings
