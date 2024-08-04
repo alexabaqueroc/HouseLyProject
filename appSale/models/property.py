@@ -1,9 +1,10 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
 from typing import Optional
 
 class Property(BaseModel):
+    id: str
     name: str
-    image: HttpUrl
+    image: str
     description: str
     maxPrice: float
     minPrice: float

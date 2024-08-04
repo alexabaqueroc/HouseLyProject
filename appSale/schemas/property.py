@@ -1,8 +1,9 @@
 from pydantic import BaseModel, HttpUrl
+from typing import Optional
 
 class PropertyCreate(BaseModel):
     name: str
-    image: HttpUrl
+    image: str
     description: str
     maxPrice: float
     minPrice: float
@@ -12,9 +13,9 @@ class PropertyCreate(BaseModel):
     address: str
 
 class Property(BaseModel):
-    id: str
+    id: str # Hacer que id sea opcional para el modelo de creación
     name: str
-    image: HttpUrl
+    image: str
     description: str
     maxPrice: float
     minPrice: float
