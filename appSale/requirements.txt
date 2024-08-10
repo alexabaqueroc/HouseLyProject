@@ -4,3 +4,7 @@ motor
 pymongo
 uvicorn
 pydantic_settings
+uvicorn
+python-multipart
+passlib[bcrypt]
+pyjwt

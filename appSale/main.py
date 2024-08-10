@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import properties, users
+from appSale.routers import properties, users
 
 # from api.v1.endpoints.testing import hola
 app = FastAPI()
