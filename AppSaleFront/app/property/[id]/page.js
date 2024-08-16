@@ -24,6 +24,8 @@ export default function Main ({params}){
   },[] )
 
   console.log("Este es el id" + {id})
- return <p>Componente</p>
+ return (
+     <h1>{property.name}</h1>
+ )
 
 }
