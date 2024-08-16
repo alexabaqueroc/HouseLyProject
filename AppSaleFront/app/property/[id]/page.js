@@ -17,7 +17,7 @@ export default function Main ({params}){
   useEffect(() => {
     GetProperty(id).then(propertyItem=>{
         console.log("Que datos tengo property", propertyItem)
-        setProperties(propertyItem)
+        setProperty(propertyItem)
     }).catch (e=>{
      console.log('error ',e.message)
     })
