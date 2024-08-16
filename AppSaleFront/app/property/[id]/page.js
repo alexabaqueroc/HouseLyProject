@@ -25,7 +25,10 @@ export default function Main ({params}){
 
   console.log("Este es el id" + {id})
  return (
-     <h1>{property.name}</h1>
+     <div>
+         <h2>{property.name}</h2>
+         <img src={property.image} alt={property.name}/>
+     </div>
  )
 
 }
