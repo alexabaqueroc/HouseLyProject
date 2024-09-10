@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    environment:
+      - PYTHONPATH=/app
+    env_file:
+      - .env-development
+    command: sh -c "fastapi dev main.py"
+    ports:
+      - 8002:8002
+    volumes:
+      - .:/app
+    container_name: backendService
