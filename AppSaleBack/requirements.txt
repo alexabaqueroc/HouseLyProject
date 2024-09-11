@@ -1,4 +1,5 @@
 fastapi
+fastapi[standard]
 pydantic
 motor
 pymongo
@@ -8,3 +9,4 @@ uvicorn
 python-multipart
 passlib[bcrypt]
 pyjwt
+python-dotenv

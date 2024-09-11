@@ -13,6 +13,7 @@ async function fetchProperties() {
     return response.data
 }
 
+
 export default function Home() {
     // use state maneja el estado para controlar rerenders
     const [properties, setProperties] = useState('')
@@ -55,3 +56,4 @@ export default function Home() {
         </>
     );
 }
+

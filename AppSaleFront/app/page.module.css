@@ -21,6 +21,8 @@
     gap: 2rem;
     width: 100%;
     max-width: var(--max-width);
+    overflow: visible;
+    perspective: 2000px;
 }
 
 @keyframes ScaleDown {
@@ -37,7 +39,7 @@
     background-size: 600px;
     background-repeat: no-repeat;
     background-position: center;
-    height: 400px; /* Adjust height as needed */
+    height: 400px;
     width: 22rem;
     position: relative;
     cursor: pointer;
@@ -46,14 +48,12 @@
     flex-direction: column;
     justify-content: flex-end;
     color: white;
-    box-shadow: 1px 2px 4px #000;
-    transition: all 1s ease;
-    transform: scale(1);
+    box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.5), 3px 6px 6px rgba(0, 0, 0, 0.1);
+    transition: background-position 1s ease, background-size 1s ease;
 }
 
 .card:hover {
-    transform: scale(1.04) !important;
-    box-shadow: 1px 2px 6px #0000006b;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.22);
     background-size: 700px;
     background-position-x: 65%;
     background-position-y: 65%;
@@ -146,4 +146,106 @@
     .properties {
         gap: 1rem;
     }
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+    background: white;
+    padding: 1px 8px;
+    border-radius: 51%;
+}
+
+.expandedCard {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1.5rem;
+    display: block;
+    box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 94vh;
+    width: 88vw;
+    z-index: 2;
+    transition: border-radius 0.7s ease, transform 1s ease;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Adjust this width based on your design */
+    margin: 20px auto; /* Centers the icons */
+    padding: 3rem;
+}
+
+.actionIcon {
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1); /* Light background for icons */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.actionIcon:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.viewMoreBtn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.viewMoreBtn button {
+    width: 100%;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    transition: all .3s ease;
+    background-color: darkgreen;
+}
+
+.viewMoreBtn button:hover {
+    background-color: green;
+}
+
+.propertyInfo {
+    color: white;
+    text-align: center;
+}
+
+.propertyInfo h1 {
+    margin-bottom: 4rem;
 }

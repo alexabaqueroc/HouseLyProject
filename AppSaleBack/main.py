@@ -1,15 +1,23 @@
+from os import environ as env
+
 import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from appSale.routers import properties, users
+from .routers import properties, users
 
+# Load the environment variables from .env file
+load_dotenv()
 # from api.v1.endpoints.testing import hola
 app = FastAPI()
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
+# origins = [
+#     "http://localhost",
+#     "http://localhost:3000",
+# ]
+
+origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,7 +33,7 @@ hola = "healthCheck"
 
 @app.get("/")
 async def read_root():
-    return {"Hello": hola}
+    return {"Hello": f"Hola env test {env['TEST']}"}
 
 
 if __name__ == '__main__':
