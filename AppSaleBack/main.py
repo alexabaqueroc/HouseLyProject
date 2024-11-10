@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import properties, users
+from .routers import propertiesSale, users
 
 # Load the environment variables from .env file
 load_dotenv()
@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(properties.router, prefix="/properties", tags=["properties"])
+app.include_router(propertiesSale.router, prefix="/propertiesSale", tags=["propertiesSale"])
 app.include_router(users.router, prefix="/users", tags=["users"])
 hola = "healthCheck"
 

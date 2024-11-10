@@ -24,7 +24,7 @@ class PropertySaleEntity(BaseModel):
     id: Optional[str] = Field(None, alias='_id')  # Optional for creation
     typeResidencial: TypeResidential
     image: str
-    video: str
+    video: Optional[str]
     description: str
     room:int
     bedroom:int

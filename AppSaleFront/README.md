@@ -9,7 +9,7 @@ with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/
 
 npx create-react-app my-app
 
-### First, run the development server:
+### First, run the Front development server:
 
 ```bash
 npm run dev
@@ -67,3 +67,7 @@ git push origin alexa
 cd AppSaleFront
 
 npm run dev
+
+### run our lovely backend
+
+fastapi dev main.py --port=8004
