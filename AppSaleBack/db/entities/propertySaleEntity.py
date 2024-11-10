@@ -1,39 +1,44 @@
-from typing import List, Literal, Optional
 from enum import Enum
+from typing import List, Optional
+
 from bson import ObjectId
 from pydantic import BaseModel, Field, model_validator
 
-#Define the Enums
-class TypeResidential (str,Enum):
+
+# Define the Enums
+class TypeResidential(str, Enum):
     house = "house"
-    apto="apto"
-    farm="farm"
+    apto = "apto"
+    farm = "farm"
     countryHouse = "countryHouse"
+
 
 class Prices(BaseModel):
     priceMin: int
     priceMax: int
     selected: bool
 
+
 class PriceSale(BaseModel):
     type: str
     selected: bool
     priceList: Optional[List[Prices]] = None  # List of prices
-    
+
+
 class PropertySaleEntity(BaseModel):
     id: Optional[str] = Field(None, alias='_id')  # Optional for creation
     typeResidencial: TypeResidential
-    image: str
+    image: List[str]
     video: Optional[str]
     description: str
-    room:int
-    bedroom:int
-    bath:int
+    room: int
+    bedroom: int
+    bath: int
     sqft: float
-    priceSale:List[PriceSale]
-    features:Optional[List[str]] #Features = ['Balcony','Garage','Internet']
-    amenities:Optional[List[str]]
-  
+    priceSale: List[PriceSale]
+    features: Optional[List[str]]  # Features = ['Balcony','Garage','Internet']
+    amenities: Optional[List[str]]
+
     @model_validator(mode='before')
     def convert_objectid(cls, values):
         if '_id' in values and isinstance(values['_id'], ObjectId):
