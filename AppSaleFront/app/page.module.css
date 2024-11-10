@@ -12,17 +12,19 @@
     align-items: center;
     padding: 2rem;
     min-height: 100vh;
+    background: #1d1d20;
 }
 
 .properties {
     margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    max-width: var(--max-width);
-    overflow: visible;
+    gap: 1rem;
     perspective: 2000px;
+    /*background-color: red;*/
+    overflow: hidden;
+    width: 70vw;
+
 }
 
 @keyframes ScaleDown {
@@ -39,8 +41,7 @@
     background-size: 600px;
     background-repeat: no-repeat;
     background-position: center;
-    height: 400px;
-    width: 22rem;
+    height: 360px;
     position: relative;
     cursor: pointer;
     overflow: hidden;

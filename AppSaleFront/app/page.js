@@ -2,7 +2,6 @@
 import styles from "./page.module.css";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
 import PropertiesList from "@/components/PropertiesList";
 import {formatPricing} from "@/helpers/numbers";
 import Head from "next/head";
@@ -17,15 +16,6 @@ async function fetchProperties() {
 export default function Home() {
     // use state maneja el estado para controlar rerenders
     const [properties, setProperties] = useState('')
-    const router = useRouter();
-
-    const handleCardClick = (id) => {
-        console.log(id)
-        router.push(`/property/${id}`);
-    };
-
-    const [count, setCount] = useState(0)
-
 
     // cuando se monto el componente una vez
     useEffect(() => {
