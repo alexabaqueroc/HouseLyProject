@@ -3,7 +3,6 @@ from enum import Enum
 from bson import ObjectId
 from pydantic import BaseModel, Field, model_validator
 
-
 #Define the Enums
 class TypeResidential (str,Enum):
     house = "house"
@@ -16,33 +15,11 @@ class Season(BaseModel):
     price: int
     selected: bool
 
-class Prices(BaseModel):
-    priceMin: int
-    priceMax: int
-    selected: bool
-
 class PriceRent(BaseModel):
     type: str
     selected: bool
     season: Optional[List[Season]] = None  # List of Temporada or None
 
-class PriceSale(BaseModel):
-    type: str
-    selected: bool
-    priceList: Optional[List[Prices]] = None  # List of prices
-    
-class PropertySaleEntity(BaseModel):
-    id: Optional[str] = Field(None, alias='_id')  # Optional for creation
-    typeResidencial: TypeResidential
-    image: str
-    video: str
-    description: str
-    room:int
-    bedroom:int
-    bath:int
-    sqft: float
-    priceSale:List[PriceSale]
-  
 class PropertyRentEntity(BaseModel):
     id: Optional[str] = Field(None, alias='_id')  # Optional for creation
     typeResidencial: TypeResidential
@@ -55,7 +32,9 @@ class PropertyRentEntity(BaseModel):
     bath:int
     sqft: float
     priceRent:List[PriceRent]
-  
+    features:Optional[List[str]] #Features = ['Balcony','Garage','Internet']
+    amenities:Optional[List[str]]
+    
     @model_validator(mode='before')
     def convert_objectid(cls, values):
         if '_id' in values and isinstance(values['_id'], ObjectId):
