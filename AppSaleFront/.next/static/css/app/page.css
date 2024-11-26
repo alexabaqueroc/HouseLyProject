@@ -1,0 +1,256 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./app/page.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
+.page_text-ellipsis__gL_W4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+
+.page_main__nw1Wk {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+    background: #1d1d20;
+}
+
+.page_properties__eszMw {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    perspective: 2000px;
+    /*background-color: red;*/
+    overflow: hidden;
+    width: 70vw;
+
+}
+
+@keyframes page_ScaleDown__p7n1x {
+    from {
+        transform: scale(2);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.page_card__Cf__u {
+    border-radius: var(--border-radius);
+    background-size: 600px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 360px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+    box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.5), 3px 6px 6px rgba(0, 0, 0, 0.1);
+    transition: background-position 1s ease, background-size 1s ease;
+}
+
+.page_card__Cf__u:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-size: 700px;
+    background-position-x: 65%;
+    background-position-y: 65%;
+}
+
+.page_card__Cf__u h5, .page_card__Cf__u p {
+    margin: 0;
+    z-index: 1;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    width: 100%;
+}
+
+.page_information__WC1qy {
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 11px 15px;
+}
+
+.page_price__9Mgp5 {
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-between;
+    width: 100%;
+    padding: 3px;
+}
+
+.page_price__9Mgp5 > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.page_price-label__vvpr6 {
+    font-size: 12px;
+    color: #888;
+}
+
+.page_price-value__et1YO {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.page_location__fy_92 {
+    display: flex;
+    background-color: rgba(210, 105, 30, 0.55);
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 20px;
+    font-size: 14px;
+    padding: 3px;
+}
+
+.page_locationMain__uTMb5 {
+    width: 100%;
+}
+
+.page_address__HQzJU {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 20px;
+}
+
+.page_offerIcon__Er4Jn {
+    top: 0;
+    background: #07c712ba;
+    border-radius: 50%;
+    width: 2rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px .5px;
+    position: absolute;
+    right: 0 !important;
+}
+
+@media (max-width: 768px) {
+    .page_card__Cf__u {
+        height: 300px;
+    }
+
+    .page_properties__eszMw {
+        gap: 1rem;
+    }
+}
+
+.page_backdrop__ZqS6L {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.page_closeBtn___rrYp {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+    background: white;
+    padding: 1px 8px;
+    border-radius: 51%;
+}
+
+.page_expandedCard__EFkIo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1.5rem;
+    display: block;
+    box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 94vh;
+    width: 88vw;
+    z-index: 2;
+    transition: border-radius 0.7s ease, transform 1s ease;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.page_actions___si5r {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Adjust this width based on your design */
+    margin: 20px auto; /* Centers the icons */
+    padding: 3rem;
+}
+
+.page_actionIcon__akK4p {
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1); /* Light background for icons */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.page_actionIcon__akK4p:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.page_viewMoreBtn__StBjz {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.page_viewMoreBtn__StBjz button {
+    width: 100%;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    transition: all .3s ease;
+    background-color: darkgreen;
+}
+
+.page_viewMoreBtn__StBjz button:hover {
+    background-color: green;
+}
+
+.page_propertyInfo__VXQXk {
+    color: white;
+    text-align: center;
+}
+
+.page_propertyInfo__VXQXk h1 {
+    margin-bottom: 4rem;
+}
+
