@@ -70,4 +70,6 @@ npm run dev
 
 ### run our lovely backend
 
+cd AppSaleBack
+
 fastapi dev main.py --port=8004
