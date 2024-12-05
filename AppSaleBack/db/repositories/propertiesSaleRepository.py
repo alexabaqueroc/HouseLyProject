@@ -1,6 +1,5 @@
-from bson import ObjectId
+from typing import List, Optional
 
-from ..db import database
 from ..entities.propertySaleEntity import PropertySaleEntity
 
 COLLECTION_NAME = 'PropertiesSale'
@@ -8,34 +7,31 @@ COLLECTION_NAME = 'PropertiesSale'
 
 class PropertiesSaleRepository:
     def __init__(self):
-        # Initialize connection, load config, etc.
-        self.collection = database[COLLECTION_NAME]
+        # Initialize any attributes or database connections if required
+        pass
 
-    async def get_all(self):
-        properties = await self.collection.find().to_list(1000)
-        for p in properties:
-            print(f" ❤️❤️Property is {p}")
-        return [PropertySaleEntity(**property) for property in properties]
+    async def get_all(self) -> List[PropertySaleEntity]:
+        properties = await PropertySaleEntity.find_all().to_list()
+        return properties
 
-    async def get_by_id(self, property_id: str):
-        property = await self.collection.find_one({"_id": ObjectId(property_id)})
+    async def get_by_id(self, property_id: str) -> Optional[PropertySaleEntity]:
+        property = await PropertySaleEntity.get(property_id)
+        return property
+
+    async def create(self, property_data: PropertySaleEntity) -> PropertySaleEntity:
+        await property_data.insert()
+        return property_data
+
+    async def delete(self, property_id: str) -> int:
+        property = await PropertySaleEntity.get(property_id)
         if property:
-            return PropertySaleEntity(**property)
-        return None
+            await property.delete()
+            return 1
+        return 0
 
-    async def create(self, property_data: PropertySaleEntity):
-        property_dict = property_data.dict(exclude_unset=True)
-        result = await self.collection.insert_one(property_dict)
-        property_dict["id"] = str(result.inserted_id)
-        return PropertySaleEntity(**property_dict)
-
-    async def delete(self, property_id: str):
-        result = await self.collection.delete_one({"_id": ObjectId(property_id)})
-        return result.deleted_count
-
-    async def update(self, property_id: str, property_data: PropertySaleEntity):
-        property_dict = property_data.dict(exclude_unset=True)
-        result = await self.collection.update_one(
-            {"_id": ObjectId(property_id)}, {"$set": property_dict}
-        )
-        return result.modified_count
+    async def update(self, property_id: str, property_data: PropertySaleEntity) -> int:
+        property = await PropertySaleEntity.get(property_id)
+        if property:
+            await property.update({"$set": property_data.dict(exclude_unset=True)})
+            return 1
+        return 0

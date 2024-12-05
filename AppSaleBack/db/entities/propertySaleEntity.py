@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import List, Optional
 
-from bson import ObjectId
-from pydantic import BaseModel, Field, model_validator
+from beanie import Document
+from pydantic import BaseModel
 
 
 # Define the Enums
@@ -25,8 +25,8 @@ class PriceSale(BaseModel):
     priceList: Optional[List[Prices]] = None  # List of prices
 
 
-class PropertySaleEntity(BaseModel):
-    id: Optional[str] = Field(None, alias='_id')  # Optional for creation
+# Solo Modelos que son collections in the DB should extend Document
+class PropertySaleEntity(Document):
     typeResidencial: TypeResidential
     image: List[str]
     video: Optional[str]
@@ -39,15 +39,5 @@ class PropertySaleEntity(BaseModel):
     features: Optional[List[str]]  # Features = ['Balcony','Garage','Internet']
     amenities: Optional[List[str]]
 
-    @model_validator(mode='before')
-    def convert_objectid(cls, values):
-        if '_id' in values and isinstance(values['_id'], ObjectId):
-            values['_id'] = str(values['_id'])
-        return values
-
-    class Config:
-        arbitrary_types_allowed = True
-        populate_by_name = True
-        json_encoders = {
-            ObjectId: str
-        }
+    class Settings:
+        name = "PropertiesSale"  # Nombre de la colección en MongoDB
