@@ -74,7 +74,28 @@ cd AppSaleBack
 
 fastapi dev main.py --port=8004
 
-
 ### si se queda en starting for ever, execute this command
+
 ### This command will delete the next folder and after run the front end automatically
+
 dn
+
+# Ensure .gitignore is not being overridden by any .git/info/exclude rules or .gitignore files higher up in the directory hierarchy. You can check with:
+
+git check-ignore -v .next
+
+# Clean up git cache
+
+git clean -fdX
+
+# Remove .next files from Git's tracking
+
+git rm -r --cached .next
+
+# Add changes to staging
+
+git add .
+
+# Commit the changes
+
+git commit -m "Untrack .next directory from Git"
