@@ -7,7 +7,7 @@ import styles from "../app/page.module.css";
 import {Button, Divider, Icon, Tag} from "@chakra-ui/react";
 import {BsCartFill, BsCurrencyDollar, BsHeart, BsTagFill} from "react-icons/bs";
 import {useEffect, useState} from "react";
-import {containerVariants, itemVariants} from "@/components/variants";
+import {containerVariants} from "@/components/variants";
 import MinimalPopup from "@/components/modalExample";
 
 
@@ -53,13 +53,9 @@ export default function PropertiesList({properties}) {
                 {properties.map(property => (
                     <motion.div
                         key={property._id}
-                        onClick={() => handleCardClick(property._id)}
-                        variants={itemVariants}
                         className={styles.card}
                         style={{backgroundImage: `url(${property.image})`}}
                         layoutId={property._id}
-                        whileHover={{scale: 1.025, rotateY: 1}}
-                        whileTap={{scale: 5}}
                     >
                         <div className={styles.information}>
                             <h5>{property.name}</h5>
@@ -67,28 +63,17 @@ export default function PropertiesList({properties}) {
                             <div className={styles.price}>
                                 <div>
                                     <p className={styles["price-label"]}>Min Price:</p>
-                                    <Tag variant='solid' colorScheme='green'><p
-                                        className={`${styles["price-value"]} ${styles["min-price"]}`}>
-                                        <Icon as={BsCurrencyDollar}/>
-                                        {property.minPrice} </p></Tag>
+                                    <p className={`${styles["price-value"]} ${styles["min-price"]}`}>
+                                        ${property.minPrice}
+                                    </p>
                                 </div>
                                 <div>
                                     <p className={styles["price-label"]}>Max Price:</p>
-                                    <Tag variant='solid' colorScheme='cyan'>
-                                        <p className={`${styles["price-value"]} ${styles["max-price"]}`}>
-                                            <Icon as={BsCurrencyDollar}/>
-                                            {property.maxPrice}</p></Tag>
+                                    <p className={`${styles["price-value"]} ${styles["max-price"]}`}>
+                                        ${property.maxPrice}
+                                    </p>
                                 </div>
                             </div>
-
-                            <div className={styles.locationMain}>
-                                <div className={styles.location}>
-                                    <p>{property.city}</p>
-                                    <p className={styles.address}>{property.address}</p>
-                                </div>
-                                <p className={styles.offerIcon}>{property.offer ? <Icon as={BsTagFill}/> : null}</p>
-                            </div>
-
                         </div>
                     </motion.div>
                 ))}
