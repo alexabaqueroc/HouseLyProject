@@ -73,3 +73,8 @@ npm run dev
 cd AppSaleBack
 
 fastapi dev main.py --port=8004
+
+
+### si se queda en starting for ever, execute this command
+### This command will delete the next folder and after run the front end automatically
+dn
