@@ -4,7 +4,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from .entities.propertyRentEntity import PropertyRentEntity
 from .entities.propertySaleEntity import PropertySaleEntity
 from .entities.propertyentity import PropertyEntity
-from .entities.usersEntity import User
+from .entities.usersEntity import UserEntity
 from ..config.config import settings
 
 
@@ -17,7 +17,7 @@ async def init_db():
                 PropertySaleEntity,
                 PropertyRentEntity,
                 PropertyEntity,
-                User
+                UserEntity
             ]
         )
         print("Conexión a la base de datos establecida con éxito 🥳🥳🥳🥳.")

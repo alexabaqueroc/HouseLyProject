@@ -20,7 +20,7 @@ class UserRead(UserBase):
 
 
 # Modelo de Beanie para la Base de Datos
-class User(Document):
+class UserEntity(Document):
     username: str
     email: EmailStr
     disabled: Optional[bool] = False

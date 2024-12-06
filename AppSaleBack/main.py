@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
     # Código que se ejecuta al iniciar la aplicación
     await init_db()
     yield
-    # Código que se ejecuta al cerrar la aplicación
+    # Código que se ejecuta al cerrar la aplicación await
     # Por ejemplo, cerrar conexiones si es necesario
 
 
