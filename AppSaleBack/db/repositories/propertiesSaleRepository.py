@@ -20,8 +20,12 @@ class PropertiesSaleRepository:
             return []
 
     async def get_by_id(self, property_id: str) -> Optional[PropertySaleEntity]:
-        property = await PropertySaleEntity.get(property_id)
-        return property
+        try:
+            property = await PropertySaleEntity.get(property_id)
+            return property
+        except Exception as e:
+            logging.error(f"❌ Error while get property by id: {str(e)} 🕵️‍♂️")
+            return []
 
     async def create(self, property_data: PropertySaleEntity) -> PropertySaleEntity:
         await property_data.insert()

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional
 from datetime import datetime,date
-from beanie import Document
+from beanie import Document,PydanticObjectId
 from pydantic import BaseModel
 
 
@@ -10,6 +10,7 @@ class TypeResidentialEnum(str, Enum):
     house = "house"
     apto = "apto"
     farm = "farm"
+    land = "land"
     countryHouse = "countryHouse"
 
 class Prices(BaseModel):
@@ -49,11 +50,15 @@ class PropertySaleEntity(Document):
     description: str
     room: int
     bath: int
-    sqft: float
+    BuildArea: float
+    PrivateArea: float
     state:List[StateEnum]
     socialLevel:List[SocialLevelEnum]
     antique:List[AntiqueEnum]
     publicationDate: datetime
+    country:PydanticObjectId 
+    city: PydanticObjectId
+    address: str
     priceSale: List[PriceSale]
     priceNegotiable:Optional[float]
     features: Optional[List[str]]  # Features = ['Balcony','Garage','Internet']
