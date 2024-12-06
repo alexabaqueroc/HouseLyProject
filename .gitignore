@@ -1,5 +1,6 @@
 .idea
 /AppSaleFront/node_modules
+/AppSaleFront/.next
 /appSale/venv
 # Ignore pycache and compiled Python files
 __pycache__/
