@@ -1,3 +1,4 @@
+import logging
 from typing import List, Optional
 
 from ..entities.propertySaleEntity import PropertySaleEntity
@@ -11,8 +12,12 @@ class PropertiesSaleRepository:
         pass
 
     async def get_all(self) -> List[PropertySaleEntity]:
-        properties = await PropertySaleEntity.find_all().to_list()
-        return properties
+        try:
+            properties = await PropertySaleEntity.find_all().to_list()
+            return properties
+        except Exception as e:
+            logging.error(f"❌ Error while fetching properties: {str(e)} 🕵️‍♂️")
+            return []
 
     async def get_by_id(self, property_id: str) -> Optional[PropertySaleEntity]:
         property = await PropertySaleEntity.get(property_id)
