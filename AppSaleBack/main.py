@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from os import environ as env
 
 import uvicorn
@@ -5,12 +6,24 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from AppSaleBack.db.db import init_db
 from .routers import propertiesSale, users, properties
 
 # Load the environment variables from .env file
 load_dotenv()
-# from api.v1.endpoints.testing import hola
-app = FastAPI()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Código que se ejecuta al iniciar la aplicación
+    await init_db()
+    yield
+    # Código que se ejecuta al cerrar la aplicación
+    # Por ejemplo, cerrar conexiones si es necesario
+
+
+app = FastAPI(lifespan=lifespan)
+
 # origins = [
 #     "http://localhost",
 #     "http://localhost:3000",

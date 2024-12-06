@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import List, Literal, Optional
 
-from bson import ObjectId
-from pydantic import BaseModel, Field, model_validator
+from beanie import Document
+from pydantic import BaseModel
 
 
 # Define the Enums
@@ -28,7 +28,7 @@ class Prices(BaseModel):
 class PriceRent(BaseModel):
     type: str
     selected: bool
-    season: Optional[List[Season]] = None  # List of Temporada or None
+    season: Optional[List[Season]] = None  # List of Seasons or None
 
 
 class PriceSale(BaseModel):
@@ -37,48 +37,7 @@ class PriceSale(BaseModel):
     priceList: Optional[List[Prices]] = None  # List of prices
 
 
-class PropertySaleEntity(BaseModel):
-    id: Optional[str] = Field(None, alias='_id')  # Optional for creation
-    typeResidencial: TypeResidential
-    image: str
-    video: str
-    description: str
-    room: int
-    bedroom: int
-    bath: int
-    sqft: float
-    priceSale: List[PriceSale]
-
-
-class PropertyRentEntity(BaseModel):
-    id: Optional[str] = Field(None, alias='_id')  # Optional for creation
-    typeResidencial: TypeResidential
-    personNo: Optional[int]
-    image: str
-    video: str
-    description: str
-    room: int
-    bedroom: int
-    bath: int
-    sqft: float
-    priceRent: List[PriceRent]
-
-    @model_validator(mode='before')
-    def convert_objectid(cls, values):
-        if '_id' in values and isinstance(values['_id'], ObjectId):
-            values['_id'] = str(values['_id'])
-        return values
-
-    class Config:
-        arbitrary_types_allowed = True
-        populate_by_name = True
-        json_encoders = {
-            ObjectId: str
-        }
-
-
-class PropertyEntity(BaseModel):
-    id: Optional[str] = Field(None, alias='_id')  # Optional for creation
+class PropertyEntity(Document):
     name: str
     image: str
     description: str
@@ -89,15 +48,5 @@ class PropertyEntity(BaseModel):
     area: float
     address: str
 
-    @model_validator(mode='before')
-    def convert_objectid(cls, values):
-        if '_id' in values and isinstance(values['_id'], ObjectId):
-            values['_id'] = str(values['_id'])
-        return values
-
-    class Config:
-        arbitrary_types_allowed = True
-        populate_by_name = True
-        json_encoders = {
-            ObjectId: str
-        }
+    class Settings:
+        name = "properties"  # Nombre de la colección en MongoDB

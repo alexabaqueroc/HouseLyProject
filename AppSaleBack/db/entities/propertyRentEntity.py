@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import List, Literal, Optional
 
-from bson import ObjectId
-from pydantic import BaseModel, Field, model_validator
+from beanie import Document
+from pydantic import BaseModel
 
 
 # Define the Enums
@@ -22,11 +22,10 @@ class Season(BaseModel):
 class PriceRent(BaseModel):
     type: str
     selected: bool
-    season: Optional[List[Season]] = None  # List of Temporada or None
+    season: Optional[List[Season]] = None  # List of Seasons or None
 
 
-class PropertyRentEntity(BaseModel):
-    id: Optional[str] = Field(None, alias='_id')  # Optional for creation
+class PropertyRentEntity(Document):
     typeResidencial: TypeResidential
     personNo: Optional[int]
     image: str
@@ -40,15 +39,5 @@ class PropertyRentEntity(BaseModel):
     features: Optional[List[str]]  # Features = ['Balcony','Garage','Internet']
     amenities: Optional[List[str]]
 
-    @model_validator(mode='before')
-    def convert_objectid(cls, values):
-        if '_id' in values and isinstance(values['_id'], ObjectId):
-            values['_id'] = str(values['_id'])
-        return values
-
-    class Config:
-        arbitrary_types_allowed = True
-        populate_by_name = True
-        json_encoders = {
-            ObjectId: str
-        }
+    class Settings:
+        name = "propertiesRent"  # Nombre de la colección en MongoDB
