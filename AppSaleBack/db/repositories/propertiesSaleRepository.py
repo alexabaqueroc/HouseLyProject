@@ -16,27 +16,45 @@ class PropertiesSaleRepository:
             properties = await PropertySaleEntity.find_all().to_list()
             return properties
         except Exception as e:
-            logging.error(f"❌ Error while fetching properties: {str(e)} 🕵️‍♂️")
+            logging.error(f"❌ Error while fetching all properties: {str(e)} 🕵️‍♂️")
             return []
 
     async def get_by_id(self, property_id: str) -> Optional[PropertySaleEntity]:
-        property = await PropertySaleEntity.get(property_id)
-        return property
+        try:
+            property = await PropertySaleEntity.get(property_id)
+            return property
+        except Exception as e:
+            logging.error(f"❌ Error while fetching property by ID ({property_id}): {str(e)} 🕵️‍♂️")
+            return None
 
     async def create(self, property_data: PropertySaleEntity) -> PropertySaleEntity:
-        await property_data.insert()
-        return property_data
+        try:
+            await property_data.insert()
+            return property_data
+        except Exception as e:
+            logging.error(f"❌ Error while creating property: {str(e)} 🕵️‍♂️")
+            raise
 
     async def delete(self, property_id: str) -> int:
-        property = await PropertySaleEntity.get(property_id)
-        if property:
-            await property.delete()
-            return 1
-        return 0
+        try:
+            property = await PropertySaleEntity.get(property_id)
+            if property:
+                await property.delete()
+                return 1
+            logging.warning(f"⚠️ Property with ID ({property_id}) not found for deletion.")
+            return 0
+        except Exception as e:
+            logging.error(f"❌ Error while deleting property with ID ({property_id}): {str(e)} 🕵️‍♂️")
+            return 0
 
     async def update(self, property_id: str, property_data: PropertySaleEntity) -> int:
-        property = await PropertySaleEntity.get(property_id)
-        if property:
-            await property.update({"$set": property_data.dict(exclude_unset=True)})
-            return 1
-        return 0
+        try:
+            property = await PropertySaleEntity.get(property_id)
+            if property:
+                await property.update({"$set": property_data.dict(exclude_unset=True)})
+                return 1
+            logging.warning(f"⚠️ Property with ID ({property_id}) not found for update.")
+            return 0
+        except Exception as e:
+            logging.error(f"❌ Error while updating property with ID ({property_id}): {str(e)} 🕵️‍♂️")
+            return 0
