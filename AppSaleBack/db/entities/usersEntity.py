@@ -4,7 +4,7 @@ from beanie import Document
 from pydantic import BaseModel, EmailStr
 
 
-# Modelos Pydantic para Entrada y Salida
+# Base user schema
 class UserBase(BaseModel):
     username: str
     email: EmailStr
@@ -12,19 +12,26 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    password: str  # Contraseña en texto plano para la creación
+    password: str  # Plain text password for creation
 
 
+# Schema for login input
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+# Schema for user response (does not expose hashed_password)
 class UserRead(UserBase):
-    id: str  # ID del usuario, se devolverá en las respuestas
+    id: str
 
 
-# Modelo de Beanie para la Base de Datos
+# Database model using Beanie
 class UserEntity(Document):
     username: str
     email: EmailStr
     disabled: Optional[bool] = False
-    hashed_password: str  # Contraseña hasheada almacenada en la BD
+    hashed_password: str  # Stored hashed password
 
     class Settings:
-        name = "users"  # Nombre de la colección en MongoDB
+        name = "users"  # MongoDB collection name

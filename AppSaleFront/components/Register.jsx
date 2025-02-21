@@ -1,77 +1,106 @@
-"use client"
-import {useState} from 'react'
-import {Box, Button, Spinner} from '@chakra-ui/react'
-import {motion} from 'framer-motion'
+"use client";
+import {useState} from "react";
+import {Box, Button, Flex, FormControl, FormLabel, Heading, Input, Spinner, Text, VStack} from "@chakra-ui/react";
+import {motion} from "framer-motion";
+import axios from "axios";
+import {useRouter} from "next/navigation";
 
 const Register = () => {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const router = useRouter();
 
-    const handleRegister = (e) => {
-        e.preventDefault()
-        setIsLoading(true)
-
-        setTimeout(() => {
-            setIsLoading(false)
-            alert('Registered Successfully!')
-        }, 2000)
-    }
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            const response = await axios.post("http://127.0.0.1:8004/users", {
+                username,
+                email,
+                password,
+            });
+            setIsLoading(false);
+            alert("Registered Successfully!");
+            console.log("Registration response:", response.data);
+            router.push("/login");
+        } catch (error) {
+            setIsLoading(false);
+            console.error("Registration error:", error);
+            alert("Registration Failed. Please try again.");
+        }
+    };
 
     return (
-        <Box as={motion.div}
-             initial={{opacity: 0, y: -20}}
-             animate={{opacity: 1, y: 0}}
-             transition={{duration: 0.5}}
-             className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50"
+        <Flex
+            minH="100vh"
+            bgImage="url('https://source.unsplash.com/random/1600x900?nature')"
+            bgSize="cover"
+            bgPos="center"
+            align="center"
+            justify="center"
+            position="relative"
         >
-            <Box className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-                    Register
-                </h2>
-                <form onSubmit={handleRegister} className="space-y-4">
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        className="w-full p-3 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-                        required
-                    />
-                    <input
-                        type="tel"
-                        placeholder="Phone"
-                        className="w-full p-3 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-                        required
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="w-full p-3 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="Country"
-                        className="w-full p-3 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="City"
-                        className="w-full p-3 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-                        required
-                    />
-                    <Button
-                        type="submit"
-                        colorScheme="teal"
-                        isFullWidth
-                        className="mt-4"
-                        isLoading={isLoading}
-                        spinner={<Spinner/>}
-                    >
-                        Register
-                    </Button>
+            {/* Overlay */}
+            <Box position="absolute" top="0" left="0" w="100%" h="100%" bg="blackAlpha.600"/>
+
+            <Box
+                as={motion.div}
+                position="relative"
+                zIndex="1"
+                bg="whiteAlpha.900"
+                backdropFilter="blur(10px)"
+                p={{base: 6, md: 10}}
+                rounded="lg"
+                shadow="2xl"
+                maxW="md"
+                w="full"
+            >
+                <Heading as="h2" size="lg" textAlign="center" mb={4} color="teal.600">
+                    Create Account
+                </Heading>
+                <Text textAlign="center" mb={6} color="gray.600">
+                    Join our community
+                </Text>
+                <form onSubmit={handleRegister}>
+                    <VStack spacing={4}>
+                        <FormControl id="username" isRequired>
+                            <FormLabel>Username</FormLabel>
+                            <Input
+                                type="text"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl id="email" isRequired>
+                            <FormLabel>Email</FormLabel>
+                            <Input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl id="password" isRequired>
+                            <FormLabel>Password</FormLabel>
+                            <Input
+                                type="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </FormControl>
+                        <Button type="submit" colorScheme="teal" width="full" isLoading={isLoading}
+                                spinner={<Spinner/>}>
+                            Register
+                        </Button>
+                    </VStack>
                 </form>
             </Box>
-        </Box>
-    )
-}
+        </Flex>
+    );
+};
 
-export default Register
+export default Register;
