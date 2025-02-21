@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from os import environ as env
 
+import cloudinary.uploader
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -8,6 +9,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from AppSaleBack.db.db import init_db
 from .routers import propertiesSale, users, properties
+
+# Configuration
+cloudinary.config(
+    cloud_name="just-me",
+    api_key="891123273289863",
+    api_secret="Y6dqxo8Ndi32s4P-l4BXe_rKESk",
+    secure=True
+)
+upload_result = cloudinary.uploader.upload("https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg",
+                                           public_id="shoes")
+print(upload_result["secure_url"])
 
 # Load the environment variables from .env file
 load_dotenv()

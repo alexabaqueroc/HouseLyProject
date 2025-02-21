@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import Depends
 
@@ -6,7 +6,7 @@ from ..db.entities.propertySaleEntity import PropertySaleEntity
 from ..db.repositories.propertiesSaleRepository import PropertiesSaleRepository
 
 
-class PropertiesBusinessLogic:
+class PropertiesSaleDomain:
     def __init__(self, repository: Annotated[PropertiesSaleRepository, Depends()]):
         # Initialize connection, load config, etc.
         self.repository = repository
@@ -16,6 +16,10 @@ class PropertiesBusinessLogic:
 
     async def get_properties(self):
         return await self.repository.get_all()
+
+    async def save_urls(self, id: str, url_images: List[str]):
+        # agregar mas business logic extend more functions
+        return await self.repository.add_images_to_property(property_id, url_images)
 
     async def get_property_by_id(self, property_id: str):
         return await self.repository.get_by_id(property_id)
