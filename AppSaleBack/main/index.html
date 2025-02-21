@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Alexa!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        /* Gift Box Animation */
+        .box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ffcc00, #fbbf24);
+            border: 3px solid #d97706;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 5rem;
+            overflow: hidden;
+        }
+
+        .box:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Lid of the Box */
+        .lid {
+            position: absolute;
+            top: -8px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(135deg, #ff4d4d, #e3342f);
+            border-radius: 10px 10px 0 0;
+            transform-origin: bottom;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .opened .lid {
+            transform: rotate(-120deg) translateY(-80px);
+        }
+
+        /* Ribbons */
+        .ribbon {
+            position: absolute;
+            background-color: #c53030;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .ribbon.vertical {
+            width: 15px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .ribbon.horizontal {
+            width: 100%;
+            height: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Extra Decoration: Shine Effect */
+        .shine {
+            position: absolute;
+            top: -30%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 70%);
+            transform: rotate(-30deg);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .surprise-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(0 0 0 / 90%);
+            color: #fff;
+            z-index: 10;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Open Animation */
+        .opened .lid {
+            transform: rotate(-120deg) translateY(-80px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-500 to-indigo-700 h-screen flex items-center justify-center text-white">
+
+<div class="text-center">
+    <h1 class="text-4xl font-extrabold mb-8">🎉 Happy Birthday, Alexa! 🎂</h1>
+    <p class="text-lg italic mb-4">Click aquí para abrir tu regalo sorpresa 🤗</p>
+
+    <div id="giftBox" class="box mx-auto">
+        <div class="lid"></div>
+        <div class="ribbon vertical"></div>
+        <div class="ribbon horizontal"></div>
+        <div class="shine"></div>
+    </div>
+</div>
+
+<!-- Surprise Message Fullscreen -->
+<div id="surpriseContainer" class="surprise-container animate__animated animate__fadeIn">
+    <div>
+        <h1 class="text-6xl font-bold animate__animated animate__bounceInDown">🎁 Surprise, Alexa! 🎁</h1>
+        <p class="mt-8 text-4xl animate__animated animate__fadeInUp animate__delay-1s">
+            Ahora tienes la cuenta HBO para ver <strong class="text-yellow-400">sexy John Doe!</strong>
+        </p>
+        <div class="mt-6 text-2xl">
+            <p class="animate__animated animate__fadeIn animate__delay-2s">Log in with:</p>
+            <p class="mt-2 animate__animated animate__fadeIn animate__delay-2s">
+                <strong>Email:</strong> cristian.torres19@hotmail.com
+            </p>
+            <p class="animate__animated animate__fadeIn animate__delay-2s">
+                <strong>Password:</strong> rockoman19
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const giftBox = document.getElementById('giftBox')
+    const surpriseContainer = document.getElementById('surpriseContainer')
+
+    // Confetti Effect
+    function launchConfetti() {
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = {startVelocity: 30, spread: 360, ticks: 60, zIndex: 10};
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: {x: randomInRange(0.1, 0.9), y: Math.random() - 0.2}
+            });
+        }, 250);
+    }
+
+    giftBox.addEventListener('click', () => {
+        // Animate Gift Box
+        giftBox.classList.add('opened')
+
+        // Launch Confetti
+        launchConfetti()
+
+        // Show Fullscreen Message
+        setTimeout(() => {
+            surpriseContainer.style.display = 'flex'
+        }, 1000)
+    })
+</script>
+</body>
+</html>

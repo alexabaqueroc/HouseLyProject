@@ -14,6 +14,7 @@ class PropertiesSaleRepository:
     async def get_all(self) -> List[PropertySaleEntity]:
         try:
             properties = await PropertySaleEntity.find_all().to_list()
+            print(properties)
             return properties
         except Exception as e:
             logging.error(f"❌ Error while fetching properties: {str(e)} 🕵️‍♂️")
@@ -44,3 +45,16 @@ class PropertiesSaleRepository:
             await property.update({"$set": property_data.dict(exclude_unset=True)})
             return 1
         return 0
+
+    async def add_images_to_property(self, property_id: str, image_urls: List[str]) -> int:
+        try:
+            property = await PropertySaleEntity.get(property_id)
+            if property:
+                current_images = property.image or []
+                new_images = current_images + image_urls
+                await property.update({"$set": {"image": new_images}})
+                return 1
+            return 0
+        except Exception as e:
+            logging.error(f"Error adding images to property ({property_id}): {str(e)}")
+            return 0
