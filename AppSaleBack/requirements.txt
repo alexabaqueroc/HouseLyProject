@@ -11,3 +11,4 @@ passlib[bcrypt]
 pyjwt
 python-dotenv
 beanie
+cloudinary
