@@ -15,11 +15,13 @@ propertiesSaleDi = Annotated[PropertiesSaleDomain, Depends()]
 async def fetch_properties(propertyLogic: propertiesSaleDi):
     return await propertyLogic.get_properties()
 
+
 @router.get("/{user_id}", tags=["propertiesSale"])
-async def fetch_properties(propertyLogic: propertiesSaleDi,user_id:str):
+async def fetch_properties(propertyLogic: propertiesSaleDi, user_id: str):
     return await propertyLogic.get_properties_by_user_id(user_id)
 
-@router.get("/{property_id}", tags=["propertiesSale"])
+
+@router.get("/id/{property_id}", tags=["propertiesSale"])
 async def get_by_id(propertyLogic: propertiesSaleDi, property_id: str):
     property = await propertyLogic.get_property_by_id(property_id)
     if not property:
