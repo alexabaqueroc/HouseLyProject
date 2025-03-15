@@ -7,11 +7,11 @@ from pydantic import BaseModel
 
 # Define the Enums
 class TypeResidentialEnum(str, Enum):
-    house = "Casa"
-    apto = "Apartamento"
-    farm = "Finca"
-    land = "Terreno"
-    countryHouse = "CasaCampo"
+    house = "House"
+    apto = "Apartment"
+    farm = "Farm"
+    land = "Land"
+    countryHouse = "CountryHouse"
 
 class Prices(BaseModel):
     priceMin: int
