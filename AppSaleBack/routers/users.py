@@ -13,8 +13,8 @@ router = APIRouter()
 
 
 @router.post("/", response_model=UserEntity)
-async def create_user(user: UserCreate, logic: UserLogic = Depends()):
-    return await logic.create_user(user)
+async def create_user(user: UserCreate, userLogic: UserLogic = Depends()):
+    return await userLogic.create_user(user)
 
 
 # New login endpoint
