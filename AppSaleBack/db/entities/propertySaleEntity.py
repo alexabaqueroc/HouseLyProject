@@ -7,11 +7,11 @@ from pydantic import BaseModel
 
 # Define the Enums
 class TypeResidentialEnum(str, Enum):
-    house = "house"
-    apto = "apto"
-    farm = "farm"
-    land = "land"
-    countryHouse = "countryHouse"
+    house = "Casa"
+    apto = "Apartamento"
+    farm = "Finca"
+    land = "Terreno"
+    countryHouse = "CasaCampo"
 
 class Prices(BaseModel):
     priceMin: int
@@ -44,6 +44,8 @@ class AntiqueEnum(str, Enum):
 
 # Solo Modelos que son collections in the DB should extend Document
 class PropertySaleEntity(Document):
+    userId:str
+    name:str
     typeResidencial: TypeResidentialEnum
     image: List[str]
     video: Optional[str]

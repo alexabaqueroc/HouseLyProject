@@ -1,11 +1,19 @@
+from enum import Enum
 from typing import Optional
-
 from beanie import Document
 from pydantic import BaseModel, EmailStr
 
 
+class UserTypeEnum(str, Enum):
+    sale = "sale"
+    rent = "rent"
+    buy = "buy"
+    lessor ="lessor"
+    
+
 # Base user schema
 class UserBase(BaseModel):
+    userType: UserTypeEnum
     username: str
     email: EmailStr
     disabled: Optional[bool] = False
@@ -28,6 +36,7 @@ class UserRead(UserBase):
 
 # Database model using Beanie
 class UserEntity(Document):
+    userType: UserTypeEnum
     username: str
     email: EmailStr
     disabled: Optional[bool] = False

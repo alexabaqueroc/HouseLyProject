@@ -6,7 +6,7 @@ import styles from "../app/page.module.css"
 import {useState} from "react"
 import {ChevronLeftIcon, ChevronRightIcon} from "@chakra-ui/icons"
 
-export default function PropertiesList({properties}) {
+export default function PropertiesRentList({properties}) {
     const [selectedImageIndex, setSelectedImageIndex] = useState({})
     const router = useRouter()
 

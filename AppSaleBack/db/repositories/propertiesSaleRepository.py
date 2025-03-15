@@ -20,6 +20,14 @@ class PropertiesSaleRepository:
             logging.error(f"❌ Error while fetching properties: {str(e)} 🕵️‍♂️")
             return []
 
+    async def get_by_user_id(self, user_id: str) -> Optional[PropertySaleEntity]:
+        try:
+            property = await PropertySaleEntity.find(PropertySaleEntity.userId == user_id).to_list()
+            return property
+        except Exception as e:
+            logging.error(f"❌ Error while get property by user id: {str(e)} 🕵️‍♂️")
+            return []
+
     async def get_by_id(self, property_id: str) -> Optional[PropertySaleEntity]:
         try:
             property = await PropertySaleEntity.get(property_id)

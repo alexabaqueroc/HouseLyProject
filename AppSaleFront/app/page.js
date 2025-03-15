@@ -2,13 +2,13 @@
 import styles from "./page.module.css";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import PropertiesList from "@/components/PropertiesList";
+import PropertiesRentList from "@/components/PropertiesList";
 import {formatPricing} from "@/helpers/numbers";
 import Head from "next/head";
 
 // Example async function to fetch properties from FastAPI
 async function fetchProperties() {
-    const response = await axios.get("http://127.0.0.1:8004/properties");
+    const response = await axios.get("http://127.0.0.1:8004/properties")
     return response.data;
 }
 
@@ -44,7 +44,7 @@ export default function Home() {
             <main className={styles.main}>
                 <h1>HouseLy App</h1>
                 {/* Render the properties list once data is available */}
-                {properties.length > 0 && <PropertiesList properties={properties}/>}
+                {properties.length > 0 && <PropertiesRentList properties={properties}/>}
             </main>
         </>
     );
