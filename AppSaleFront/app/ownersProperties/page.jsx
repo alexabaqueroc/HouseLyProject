@@ -6,7 +6,6 @@ import {motion} from "framer-motion";
 import Head from "next/head";
 import {AddIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/navigation";
-import styles from "./page.module.css";
 
 export default function PropertiesSalePage() {
     const [properties, setProperties] = useState([]);
@@ -14,8 +13,9 @@ export default function PropertiesSalePage() {
     const router = useRouter();
 
     useEffect(() => {
-        // Get the userId from localStorage (defaults to "user123" if not found)
-        const storedUserId = localStorage.getItem("userId") || "user123";
+        // Get the userId from localStorage (defaults to provided value if not found)
+        const storedUserId =
+            localStorage.getItem("userId");
         // Fetch the properties for the given userId
         axios
             .get(`http://127.0.0.1:8004/propertiesSale/${storedUserId}`)
@@ -31,11 +31,25 @@ export default function PropertiesSalePage() {
     }, []);
 
     // Placeholder function for the CTA button.
-    // Replace with navigation or modal opening logic for creating a new property.
     const handleAddProperty = () => {
         console.log("CTA button clicked");
-        // For example, navigate to a creation page:
-        // router.push("/property/create");
+        // Example: router.push("/property/create");
+    };
+
+    // Framer Motion variants for staggering
+    const containerVariants = {
+        hidden: {opacity: 0},
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: {opacity: 0, y: 20},
+        visible: {opacity: 1, y: 0},
     };
 
     return (
@@ -47,9 +61,9 @@ export default function PropertiesSalePage() {
                     content="Explore your properties with a smooth, animated experience."
                 />
             </Head>
-            <main className={styles.main}>
+            <main className="min-h-screen bg-gray-900 p-4 text-gray-100">
                 <motion.h1
-                    className={styles.title}
+                    className="text-3xl font-bold text-center my-8"
                     initial={{opacity: 0, y: -50}}
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 1}}
@@ -57,47 +71,57 @@ export default function PropertiesSalePage() {
                     Your Property Portfolio
                 </motion.h1>
                 {loading ? (
-                    <motion.div
-                        className={styles.loading}
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        transition={{duration: 1}}
-                    >
-                        Loading your properties...
-                    </motion.div>
+                    <div className="flex justify-center items-center h-64">
+                        <svg
+                            className="animate-spin h-12 w-12 text-blue-500"
+                            viewBox="0 0 24 24"
+                        >
+                            <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                            ></circle>
+                            <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8z"
+                            ></path>
+                        </svg>
+                    </div>
                 ) : (
                     <motion.div
-                        className={styles.propertiesContainer}
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        transition={{delay: 0.5, duration: 1}}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
                     >
                         {properties.length === 0 ? (
-                            <p className={styles.noProperties}>No properties found</p>
+                            <p className="col-span-full text-center text-gray-400">
+                                No properties found
+                            </p>
                         ) : (
                             properties.map((property) => (
                                 <motion.div
                                     key={property._id}
-                                    className={styles.propertyCard}
-                                    whileHover={{
-                                        scale: 1.03,
-                                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.3)",
-                                    }}
-                                    initial={{opacity: 0, y: 20}}
-                                    animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.2}}
+                                    onClick={() => router.push(`/saleProperty/${property._id}`)}
+                                    className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                                    variants={itemVariants}
+                                    whileHover={{scale: 1.03}}
                                 >
                                     <img
                                         src={property.image[0]}
                                         alt={property.name}
-                                        className={styles.propertyImage}
+                                        className="w-full h-48 object-cover"
                                     />
-                                    <div className={styles.propertyInfo}>
-                                        <h2 className={styles.propertyName}>{property.name}</h2>
-                                        <p className={styles.propertyDesc}>
+                                    <div className="p-4">
+                                        <h2 className="text-xl font-semibold">{property.name}</h2>
+                                        <p className="text-gray-300 mt-2 text-sm">
                                             {property.description}
                                         </p>
-                                        <p className={styles.propertyDetails}>
+                                        <p className="text-gray-400 mt-3 text-sm">
                       <span>
                         Rooms: <strong>{property.room}</strong>
                       </span>{" "}
@@ -114,15 +138,10 @@ export default function PropertiesSalePage() {
                                             property.priceSale.length > 0 &&
                                             property.priceSale[0].priceList &&
                                             property.priceSale[0].priceList.length > 0 && (
-                                                <p className={styles.propertyPrice}>
+                                                <p className="text-blue-400 font-medium mt-3 text-sm">
                                                     Price: $
-                                                    <strong>
-                                                        {property.priceSale[0].priceList[0].priceMin}
-                                                    </strong>{" "}
-                                                    - $
-                                                    <strong>
-                                                        {property.priceSale[0].priceList[0].priceMax}
-                                                    </strong>
+                                                    {property.priceSale[0].priceList[0].priceMin} - $
+                                                    {property.priceSale[0].priceList[0].priceMax}
                                                 </p>
                                             )}
                                     </div>
@@ -133,13 +152,13 @@ export default function PropertiesSalePage() {
                 )}
                 {/* CTA Button */}
                 <motion.button
-                    className={styles.ctaButton}
+                    className="fixed bottom-8 right-8 bg-blue-600 text-white rounded-full px-6 py-3 flex items-center space-x-2 shadow-lg hover:bg-blue-700 focus:outline-none"
                     onClick={handleAddProperty}
                     whileHover={{scale: 1.1}}
                     whileTap={{scale: 0.9}}
                 >
-                    <AddIcon boxSize={6} style={{marginRight: "0.5rem"}}/>
-                    Add Property
+                    <AddIcon boxSize={6}/>
+                    <span>Add Property</span>
                 </motion.button>
             </main>
         </>

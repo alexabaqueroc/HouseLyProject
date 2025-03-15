@@ -1,9 +1,9 @@
-import VerticalTabs from "@/components/VerticalTabs";
+import CreateSaleProperty from "@/components/CreateSaleProperty";
 
 export default function Home() {
     return (
         <div>
-            <VerticalTabs/>
+            <CreateSaleProperty/>
         </div>
     )
 }

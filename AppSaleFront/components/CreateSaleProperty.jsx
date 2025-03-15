@@ -28,7 +28,7 @@ const sections = {
     overview: <PropertyOverview/>,
     finish: <FinishSection/>,
 }
-const VerticalTabs = () => {
+const CreateSaleProperty = () => {
     const [activeTab, setActiveTab] = useState("general")
 
     const tabVariants = {
@@ -87,4 +87,4 @@ const VerticalTabs = () => {
     )
 }
 
-export default VerticalTabs
+export default CreateSaleProperty

@@ -22,6 +22,9 @@ const Login = () => {
             setIsLoading(false);
             const token = response.data.token;
             localStorage.setItem("jwtToken", token);
+            //TODO: BACKEND MUST RETURN USERID so we save it to the localstorage
+            const userId = '67d4d6a1a789e1f9925a7ce8'
+            localStorage.setItem("userId", userId)
             alert("Login Successful!");
             console.log("Login response:", response.data);
             router.push("/dashboard");
