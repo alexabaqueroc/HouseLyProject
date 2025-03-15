@@ -1,15 +1,16 @@
 "use client";
 import {useState} from "react";
-import {Box, Button, Flex, FormControl, FormLabel, Heading, Input, Spinner, Text, VStack} from "@chakra-ui/react";
+import {Box, Button, Flex, FormControl, FormLabel, Heading, Input, Spinner, Text, VStack,RadioGroup,Radio,Select,} from "@chakra-ui/react";
 import {motion} from "framer-motion";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 
 const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [username, setUsername] = useState("");
+    const [userType, setUserType] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [propertyTransactionType, setPropertyType] = useState(""); // State for Sale/Rent selection
     const router = useRouter();
 
     const handleRegister = async (e) => {
@@ -17,7 +18,8 @@ const Register = () => {
         setIsLoading(true);
         try {
             const response = await axios.post("http://127.0.0.1:8004/users", {
-                username,
+                userType,
+                propertyType: propertyTransactionType,
                 email,
                 password,
             });
@@ -60,20 +62,47 @@ const Register = () => {
                 <Heading as="h2" size="lg" textAlign="center" mb={4} color="teal.600">
                     Create Account
                 </Heading>
-                <Text textAlign="center" mb={6} color="gray.600">
-                    Join our community
-                </Text>
+               
                 <form onSubmit={handleRegister}>
                     <VStack spacing={4}>
-                        <FormControl id="username" isRequired>
-                            <FormLabel>Username</FormLabel>
-                            <Input
-                                type="text"
-                                placeholder="Enter your username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                            />
+                        <FormControl id="userType" isRequired>
+                            <FormLabel>Are you owner?</FormLabel>
+                            <RadioGroup
+                                value={userType}
+                                onChange={(value) => setUserType(value)}
+                            >
+                                <Radio value="seller">Yes</Radio>
+                                <Radio value="buyer">No</Radio>
+                            </RadioGroup>
                         </FormControl>
+                        {/* Conditionally render the select list for Sale/Rent when Yes is selected */}
+                        {userType === "seller" && (
+                        <FormControl id="propertyTransactionType" isRequired>
+                            <FormLabel>Property Type</FormLabel>
+                            <Select
+                            value={propertyTransactionType}
+                            onChange={(e) => setPropertyType(e.target.value)}
+                            placeholder="Select Property Type"
+                            >
+                            <option value="Sale">Sale</option>
+                            <option value="Rent">Rent</option>
+                            </Select>
+                        </FormControl>
+                        )}
+                        {/* Conditionally render the select list for Sale/Rent when Yes is selected */}
+                        {userType === "buyer" && (
+                        <FormControl id="propertyTransactionType" isRequired>
+                            <FormLabel>Property Type</FormLabel>
+                            <Select
+                            value={propertyTransactionType}
+                            onChange={(e) => setPropertyType(e.target.value)}
+                            placeholder="Select Property Type"
+                            >
+                            <option value="Buy">Buy</option>
+                            <option value="Rent">Lessor</option>
+                            </Select>
+                        </FormControl>
+                        )}
                         <FormControl id="email" isRequired>
                             <FormLabel>Email</FormLabel>
                             <Input
