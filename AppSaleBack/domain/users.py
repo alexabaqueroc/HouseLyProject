@@ -17,8 +17,6 @@ class UserLogic:
         user_dict = user.dict()
         user_dict["hashed_password"] = hashed_password
         user_dict.pop("password", None)
-        user_dict["username"] =  user.name  # Asignamos el nombre como nombre de usuario
-        # Crear y guardar el nuevo usuario en la base de datos
         return await self.repository.create_user(UserEntity(**user_dict))
 
     def _hash_password(self, password: str) -> str:

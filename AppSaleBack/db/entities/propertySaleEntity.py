@@ -7,11 +7,11 @@ from pydantic import BaseModel
 
 # Define the Enums
 class TypeResidentialEnum(str, Enum):
-    house = "Casa"
-    apto = "Apartamento"
-    farm = "Finca"
-    land = "Terreno"
-    countryHouse = "CasaCampo"
+    house = "House"
+    apto = "Apartment"
+    farm = "Farm"
+    land = "Land"
+    countryHouse = "CountryHouse"
 
 class Prices(BaseModel):
     priceMin: int
@@ -42,6 +42,12 @@ class AntiqueEnum(str, Enum):
     Sixteen_TO_Thirty_Years = "From 16 to 30 years"
     More_Than_Thirty_Years = "More than 30 years"
 
+class TransactionTypeEnum(str, Enum):
+    sale = "sale"
+    rent = "rent"
+    buy = "buy"
+    lessor ="lessor"
+
 # Solo Modelos que son collections in the DB should extend Document
 class PropertySaleEntity(Document):
     userId:str
@@ -65,6 +71,7 @@ class PropertySaleEntity(Document):
     priceNegotiable:Optional[float]
     features: Optional[List[str]]  # Features = ['Balcony','Garage','Internet']
     amenities: Optional[List[str]]
+    propertyTransactionType:TransactionTypeEnum
 
     class Settings:
         name = "PropertiesSale"  # Nombre de la colección en MongoDB

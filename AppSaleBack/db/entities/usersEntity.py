@@ -5,16 +5,12 @@ from pydantic import BaseModel, EmailStr
 
 
 class UserTypeEnum(str, Enum):
-    sale = "sale"
-    rent = "rent"
-    buy = "buy"
-    lessor ="lessor"
-    
+   buyer="buyer"
+   seller="seller"
 
 # Base user schema
 class UserBase(BaseModel):
     userType: UserTypeEnum
-    username: str
     email: EmailStr
     disabled: Optional[bool] = False
 
@@ -37,7 +33,6 @@ class UserRead(UserBase):
 # Database model using Beanie
 class UserEntity(Document):
     userType: UserTypeEnum
-    username: str
     email: EmailStr
     disabled: Optional[bool] = False
     hashed_password: str  # Stored hashed password
