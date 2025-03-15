@@ -1,7 +1,8 @@
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional
-from datetime import datetime,date
-from beanie import Document,PydanticObjectId
+
+from beanie import Document, PydanticObjectId
 from pydantic import BaseModel
 
 
@@ -13,19 +14,23 @@ class TypeResidentialEnum(str, Enum):
     land = "Land"
     countryHouse = "CountryHouse"
 
+
 class Prices(BaseModel):
     priceMin: int
     priceMax: int
     selected: bool
+
 
 class PriceSale(BaseModel):
     type: str
     selected: bool
     priceList: Optional[List[Prices]] = None  # List of prices
 
+
 class StateEnum(str, Enum):
     new = "new"
     used = "used"
+
 
 class SocialLevelEnum(str, Enum):
     one = "1"
@@ -35,6 +40,7 @@ class SocialLevelEnum(str, Enum):
     five = "5"
     six = "6"
 
+
 class AntiqueEnum(str, Enum):
     Less_Than_One_Year = "Less than 1 year"
     One_To_Eight_Years = "From 1 to 8 years"
@@ -42,16 +48,19 @@ class AntiqueEnum(str, Enum):
     Sixteen_TO_Thirty_Years = "From 16 to 30 years"
     More_Than_Thirty_Years = "More than 30 years"
 
+
 class TransactionTypeEnum(str, Enum):
     sale = "sale"
     rent = "rent"
     buy = "buy"
-    lessor ="lessor"
+    lessor = "lessor"
 
+
+# ORM
 # Solo Modelos que son collections in the DB should extend Document
 class PropertySaleEntity(Document):
-    userId:str
-    name:str
+    userId: str
+    name: str
     typeResidencial: TypeResidentialEnum
     image: List[str]
     video: Optional[str]
@@ -60,18 +69,18 @@ class PropertySaleEntity(Document):
     bath: int
     BuildArea: float
     PrivateArea: float
-    state:List[StateEnum]
-    socialLevel:List[SocialLevelEnum]
-    antique:List[AntiqueEnum]
+    state: List[StateEnum]
+    socialLevel: List[SocialLevelEnum]
+    antique: List[AntiqueEnum]
     publicationDate: datetime
-    country:PydanticObjectId 
+    country: PydanticObjectId
     city: PydanticObjectId
     address: str
     priceSale: List[PriceSale]
-    priceNegotiable:Optional[float]
+    priceNegotiable: Optional[float]
     features: Optional[List[str]]  # Features = ['Balcony','Garage','Internet']
     amenities: Optional[List[str]]
-    propertyTransactionType:TransactionTypeEnum
+    propertyTransactionType: TransactionTypeEnum
 
     class Settings:
         name = "PropertiesSale"  # Nombre de la colección en MongoDB

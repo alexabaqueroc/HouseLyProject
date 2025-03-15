@@ -9,6 +9,7 @@ from ..db.repositories.propertiesSaleRepository import PropertiesSaleRepository
 class PropertiesSaleDomain:
     def __init__(self, repository: Annotated[PropertiesSaleRepository, Depends()]):
         # Initialize connection, load config, etc.
+        # usamos residentialTYpeRepository
         self.repository = repository
 
     async def save_property(self, property_data: PropertySaleEntity):
@@ -19,9 +20,10 @@ class PropertiesSaleDomain:
 
     async def save_urls(self, id: str, url_images: List[str]):
         # agregar mas business logic extend more functions
+        # Traemos los valores de residentialType
         return await self.repository.add_images_to_property(property_id, url_images)
 
-    async def get_properties_by_user_id(self, user_id:str):
+    async def get_properties_by_user_id(self, user_id: str):
         return await self.repository.get_by_user_id(user_id)
 
     async def get_property_by_id(self, property_id: str):

@@ -5,6 +5,12 @@ import {motion} from "framer-motion";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 
+
+export const extractUserId = (token) => {
+    const payload = token.split(".")[1];
+    return JSON.parse(window.atob(payload)).sub;
+}
+
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
@@ -22,8 +28,7 @@ const Login = () => {
             setIsLoading(false);
             const token = response.data.token;
             localStorage.setItem("jwtToken", token);
-            //TODO: BACKEND MUST RETURN USERID so we save it to the localstorage
-            const userId = '67d4d6a1a789e1f9925a7ce8'
+            const userId = extractUserId(token)
             localStorage.setItem("userId", userId)
             alert("Login Successful!");
             console.log("Login response:", response.data);
